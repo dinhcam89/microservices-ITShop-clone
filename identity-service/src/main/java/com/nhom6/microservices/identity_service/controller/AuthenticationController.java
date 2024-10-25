@@ -3,6 +3,7 @@ package com.nhom6.microservices.identity_service.controller;
 import com.nhom6.microservices.identity_service.dto.request.ApiResponse;
 import com.nhom6.microservices.identity_service.dto.request.AuthenticationRequest;
 import com.nhom6.microservices.identity_service.dto.request.IntrospectRequest;
+import com.nhom6.microservices.identity_service.dto.request.LogoutRequest;
 import com.nhom6.microservices.identity_service.dto.respone.AuthenticationRespone;
 import com.nhom6.microservices.identity_service.dto.respone.IntrospectResponse;
 import com.nhom6.microservices.identity_service.service.AuthenticationService;
@@ -37,5 +38,14 @@ public class AuthenticationController {
         return ApiResponse.<IntrospectResponse>builder()
                 .result(result)
                 .build();
+    }
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request)
+            throws ParseException, JOSEException {
+            authenticationService.logout(request);
+
+            return ApiResponse.<Void>builder()
+                    .build();
+
     }
 }
