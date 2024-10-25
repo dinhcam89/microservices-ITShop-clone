@@ -1,6 +1,7 @@
 package com.nhom6.microservices.identity_service.dto.respone;
 
 
+import com.nhom6.microservices.identity_service.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -19,5 +20,6 @@ public class UserResponse {
     String firstName;
     String lastName;
     String email;
-    Set<String> roles;
+
+    Set<RoleResponse> roles;
 }

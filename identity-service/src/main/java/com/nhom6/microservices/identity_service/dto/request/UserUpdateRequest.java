@@ -3,6 +3,8 @@ package com.nhom6.microservices.identity_service.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,6 @@ public class UserUpdateRequest {
     private String firstName;
     private String lastName;
     private String email;
+
+    List<String> roles;
 }

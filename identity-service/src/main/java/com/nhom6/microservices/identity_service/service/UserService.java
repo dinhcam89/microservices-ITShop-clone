@@ -8,6 +8,7 @@ import com.nhom6.microservices.identity_service.enums.Role;
 import com.nhom6.microservices.identity_service.exception.AppException;
 import com.nhom6.microservices.identity_service.exception.ErrorCode;
 import com.nhom6.microservices.identity_service.mapper.UserMapper;
+import com.nhom6.microservices.identity_service.repository.RoleRepository;
 import com.nhom6.microservices.identity_service.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ import java.util.Optional;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
-
+    RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest userCreationRequest) {
@@ -78,6 +79,11 @@ public class UserService {
 
         User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
         userMapper.updateUser(user, userUpdateRequest);
+        user.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
+
+        var role = roleRepository.findAllById(userUpdateRequest.getRoles());
+        user.setRoles(new HashSet<>(role));
+
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
