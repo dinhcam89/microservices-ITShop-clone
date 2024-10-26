@@ -1,8 +1,10 @@
 package com.nhom6.microservices.identity_service.service;
 
+import com.nhom6.microservices.identity_service.constant.PredefinedRole;
 import com.nhom6.microservices.identity_service.dto.request.UserCreationRequest;
 import com.nhom6.microservices.identity_service.dto.request.UserUpdateRequest;
 import com.nhom6.microservices.identity_service.dto.respone.UserResponse;
+import com.nhom6.microservices.identity_service.entity.Role;
 import com.nhom6.microservices.identity_service.entity.User;
 import com.nhom6.microservices.identity_service.exception.AppException;
 import com.nhom6.microservices.identity_service.exception.ErrorCode;
@@ -44,9 +46,11 @@ public class UserService {
         User user =userMapper.toUser(userCreationRequest);
         user.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
 
-        HashSet<String> roles = new HashSet<>();
-        //roles.add(Role.USER.name());
-       // user.setRoles(roles);
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+
+
+        user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepository.save(user));
     }

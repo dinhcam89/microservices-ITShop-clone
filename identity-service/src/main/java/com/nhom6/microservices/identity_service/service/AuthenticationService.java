@@ -152,7 +152,7 @@ public class AuthenticationService {
 
         Date expirationTime =(isRefresh)
                 ? new Date(signedJWT.getJWTClaimsSet().getIssueTime()
-                .toInstant().plus(REFRESH_DURATION,ChronoUnit.SECONDS).toEpochMilli())
+                .toInstant().plus(REFRESH_DURATION,ChronoUnit.HOURS).toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified = signedJWT.verify(verifier);
@@ -178,7 +178,7 @@ public class AuthenticationService {
                 .issuer("amiby.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()
+                        Instant.now().plus(VALID_DURATION, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
