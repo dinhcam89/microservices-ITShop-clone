@@ -1,9 +1,6 @@
 package com.nhom6.microservices.identity_service.controller;
 
-import com.nhom6.microservices.identity_service.dto.request.ApiResponse;
-import com.nhom6.microservices.identity_service.dto.request.AuthenticationRequest;
-import com.nhom6.microservices.identity_service.dto.request.IntrospectRequest;
-import com.nhom6.microservices.identity_service.dto.request.LogoutRequest;
+import com.nhom6.microservices.identity_service.dto.request.*;
 import com.nhom6.microservices.identity_service.dto.respone.AuthenticationRespone;
 import com.nhom6.microservices.identity_service.dto.respone.IntrospectResponse;
 import com.nhom6.microservices.identity_service.service.AuthenticationService;
@@ -39,6 +36,15 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationRespone> logIn(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        var result = authenticationService.RefreshToken(request);
+        return ApiResponse.<AuthenticationRespone>builder()
+                .result(result)
+                .build();
+    }
+
     @PostMapping("/logout")
     ApiResponse<Void> logout(@RequestBody LogoutRequest request)
             throws ParseException, JOSEException {

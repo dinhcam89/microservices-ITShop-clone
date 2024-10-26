@@ -1,6 +1,5 @@
 package com.nhom6.microservices.identity_service.configuration;
 
-import com.nhom6.microservices.identity_service.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +28,7 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = {"/api/users",
             "/api/auth/token", "/api/auth/introspect", "/api/auth/logout"
+            ,"/api/auth/refresh"
     };
 
     @Autowired
@@ -61,7 +61,7 @@ public class SecurityConfig {
         converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return converter;
     }
-    
+
 
 
 

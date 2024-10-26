@@ -4,7 +4,6 @@ import com.nhom6.microservices.identity_service.dto.request.UserCreationRequest;
 import com.nhom6.microservices.identity_service.dto.request.UserUpdateRequest;
 import com.nhom6.microservices.identity_service.dto.respone.UserResponse;
 import com.nhom6.microservices.identity_service.entity.User;
-import com.nhom6.microservices.identity_service.enums.Role;
 import com.nhom6.microservices.identity_service.exception.AppException;
 import com.nhom6.microservices.identity_service.exception.ErrorCode;
 import com.nhom6.microservices.identity_service.mapper.UserMapper;
@@ -46,7 +45,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
 
         HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
+        //roles.add(Role.USER.name());
        // user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepository.save(user));
