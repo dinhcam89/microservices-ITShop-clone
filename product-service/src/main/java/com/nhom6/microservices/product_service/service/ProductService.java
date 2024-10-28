@@ -6,6 +6,7 @@ import com.nhom6.microservices.product_service.model.Product;
 import com.nhom6.microservices.product_service.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,8 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+
     private final ProductRepository productRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductRespone createProduct(ProductRequest productRequest) {
         Product product = Product.builder()
                 .name(productRequest.name())
@@ -40,6 +43,7 @@ public class ProductService {
                         product.getPrice(), product.getType(), product.getImageUrl()))
                 .toList();
     }
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAllProducts() {
         productRepository.deleteAll();
         log.info("All products deleted successfully");
@@ -52,6 +56,7 @@ public class ProductService {
                 product.getSkuCode(), product.getPrice(), product.getType(), product.getImageUrl());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductRespone updateProduct(String id, ProductRequest productRequest) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -66,12 +71,16 @@ public class ProductService {
         return new ProductRespone(product.getId(), product.getName(), product.getDescription(),
                 product.getSkuCode(), product.getPrice(), product.getType(), product.getImageUrl());
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduct(String id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         productRepository.delete(product);
         log.info("Product deleted successfully");
     }
+
+
     public List<ProductRespone> getProductByType(String type) {
          return  productRepository.findByType(type).stream()
                 .map(product -> new ProductRespone(product.getId(), product.getName(), product.getDescription()
