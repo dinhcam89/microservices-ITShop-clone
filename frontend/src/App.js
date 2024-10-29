@@ -6,6 +6,8 @@ import Login from './page/LoginPage/Login';
 import Register from './page/RegisterPage/Register';
 import { AuthProvider } from './contexts/AuthContext';
 import Profile from './page/Info/Info';
+import AdminDashboard from './admin/AdminDashboard';
+import PrivateAdminRoute from './components/PrivateAdminRoute';
 export default function App() {
   return (
     <AuthProvider>
@@ -16,10 +18,17 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Home />} />
             <Route path='/productdetail' element={<ProductDetail/>} />
-            <Route path='/cart' element={<Cart/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/product/:id" element={<ProductDetail/>} />
-            {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
+            <Route 
+            path="/admin/*" 
+            element={
+              <PrivateAdminRoute>
+                <AdminDashboard />
+              </PrivateAdminRoute>
+            } 
+          />
+            
           </Routes>
         </div>
       </BrowserRouter>

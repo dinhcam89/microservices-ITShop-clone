@@ -37,7 +37,9 @@ const Home = () => {
     const handleTypeSelect = (type) => {
       setSelectedType(type);
     };
-  
+    
+
+
     return (
       <div className='pt-24'>
         <Navbar />

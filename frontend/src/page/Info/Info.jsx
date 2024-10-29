@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import axios from 'axios';
 
 const Profile = () => {
-  const { user } = useAuth();
   const [userInfo, setUserInfo] = useState({
     username: '',
     email: '',

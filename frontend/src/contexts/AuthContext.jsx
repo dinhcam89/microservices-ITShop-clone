@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       
       if (response.data.result.valid) {
         setUser({
-          username: localStorage.getItem('username')
+          username: localStorage.getItem('username'),
         });
       } else {
         logout();
@@ -50,10 +50,9 @@ export const AuthProvider = ({ children }) => {
         
         // Lấy role từ response
         const role = response.data.result.role[0].name;
-        
         setUser({
           username: username,
-          role: role
+          role: role,
         });
 
         return { success: true, role: role };
