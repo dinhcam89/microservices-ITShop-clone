@@ -78,6 +78,23 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
+    public UserResponse updatemyinfo(UserUpdateRequest userUpdateRequest) {
+        var securityContext = SecurityContextHolder.getContext();
+        String username = securityContext.getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
+
+        log.info("In method updatemyinfo");
+        user.setEmail(userUpdateRequest.getEmail());
+        user.setFirstName(userUpdateRequest.getFirstName());
+        user.setLastName(userUpdateRequest.getLastName());
+        user.setAddress(userUpdateRequest.getAddress());
+        user.setPhone(userUpdateRequest.getPhone());
+        return userMapper.toUserResponse(userRepository.save(user));
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse updateUser(String id, UserUpdateRequest userUpdateRequest) {
 
         User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
@@ -94,4 +111,5 @@ public class UserService {
         userRepository .deleteById(id);
         return "User has been deleted";
     }
+
 }

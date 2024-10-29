@@ -2,19 +2,27 @@ import { Routes,Route, BrowserRouter } from 'react-router-dom';
 import Home from './page/Home/Home';
 import ProductDetail from './page/ProductDetail/ProductDetail';
 import Cart from './page/Cart/Cart';
-
+import Login from './page/LoginPage/Login';
+import Register from './page/RegisterPage/Register';
+import { AuthProvider } from './contexts/AuthContext';
+import Profile from './page/Info/Info';
 export default function App() {
   return (
-    <div className='App'>
-      <div className='content'>
-        <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/productdetail' element={<ProductDetail/>}/>
-          <Route path='/shoppingcart' element={<Cart/>}/>
-        </Routes>
-        </BrowserRouter>
-      </div>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path='/productdetail' element={<ProductDetail/>} />
+            <Route path='/cart' element={<Cart/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/product/:id" element={<ProductDetail/>} />
+            {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }

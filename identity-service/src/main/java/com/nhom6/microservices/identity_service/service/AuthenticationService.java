@@ -88,10 +88,11 @@ public class AuthenticationService {
         }
 
         var token = generateToken(user);
-
+        var role = user.getRoles();
         return AuthenticationRespone.builder()
                 .token(token)
                 .isAuthenticated(true)
+                .role(role)
                 .build();
 
     }

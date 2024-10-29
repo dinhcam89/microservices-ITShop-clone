@@ -13,7 +13,9 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import java.time.Duration;
 
 @Configuration
@@ -31,6 +33,15 @@ public class RestClientConfig {
                 .baseUrl(inventoryServiceUrl)
                 .requestFactory(getClientRequestFactory())
                 .observationRegistry(observationRegistry)
+                .requestInterceptor((request, body, execution) -> {
+                    // Lấy token từ SecurityContext
+                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                    if (authentication != null && authentication.getCredentials() instanceof Jwt) {
+                        Jwt jwt = (Jwt) authentication.getCredentials();
+                        request.getHeaders().setBearerAuth(jwt.getTokenValue());
+                    }
+                    return execution.execute(request, body);
+                })
                 .build();
         var restClientAdapter = RestClientAdapter.create(restClient);
         var httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter).build();

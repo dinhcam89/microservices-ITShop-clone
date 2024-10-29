@@ -1,34 +1,45 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const ItemCard = () => {
+const ItemCard = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
-    <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-72  xl:w-80 cursor-pointer">
-  <div class="relative p-2.5 h-72 overflow-hidden rounded-xl bg-clip-border xl:w-80">
-    <img
-      src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-      alt="card-image"
-      class="h-full w-full object-cover rounded-md"
-    />
-  </div>
-  <div class="p-4">
-    <div class="mb-2 flex items-center justify-between">
-      <p class="text-slate-800 text-xl font-semibold">
-        Apple AirPods
-      </p>
-      <p class="text-cyan-600 text-xl font-semibold">
-        $95.00
-      </p>
+    <div 
+      className="m-2 cursor-pointer transform transition duration-300 hover:scale-105"
+      onClick={handleClick}
+    >
+      <div className="bg-white rounded-lg shadow-md hover:shadow-xl overflow-hidden">
+        <div className="aspect-w-1 aspect-h-1 overflow-hidden">
+          <img 
+            src={product?.imageUrl[0]} 
+            alt={product?.name}
+            className="w-full h-64 object-cover transform transition duration-300 hover:scale-110" 
+          />
+        </div>
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-800 truncate">
+            {product?.name}
+          </h3>
+          <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+            {product?.description}
+          </p>
+          <div className="mt-4 flex justify-between items-center">
+            <span className="text-xl font-bold text-indigo-600">
+              {new Intl.NumberFormat('vi-VN', { 
+                style: 'currency', 
+                currency: 'VND' 
+              }).format(product?.price)}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="text-slate-600 leading-normal font-light">
-      With plenty of talk and listen time, voice-activated Siri access, and
-      an available wireless charging case.
-    </p>
-    <button class="rounded-md w-full mt-6 bg-cyan-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-cyan-700 focus:shadow-none active:bg-cyan-700 hover:bg-cyan-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-      Add to Cart
-    </button>
-  </div>
-</div>
-  )
-}
+  );
+};
 
-export default ItemCard
+export default ItemCard;

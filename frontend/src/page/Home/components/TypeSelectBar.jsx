@@ -10,20 +10,37 @@ let Links = [
     {name:"Điện thoại", img_src:"https://lh3.googleusercontent.com/dkzFFaKYmPLLkPnC-cyefC1u1Qh0Iy_6Loz7adsbIMs-KAK8FA_PwUOklM3gEppESc1uSeaTa63U4Vejifo=rw"},
     {name:"Phụ kiện điện thoại", img_src:"https://lh3.googleusercontent.com/slg-pspnUXN25zVZdp_qRMwaTIj008i3gckyGvSYLepffuJZIHNvVo7unNfzkCJZdJw0Om4vMTDttW9z1LZ8ojgVerpfxxM=rw"},
     {name:"Thiết bị âm thanh", img_src:"https://lh3.googleusercontent.com/5H5fwM3O8jhVpnNCQziLVok28E6e1c8hT3579MXy3UD4YxKBv7ybyGeRzYrFrPoqvXe20fGGD2wndnDx9EwO_B6yy4kErU8KUw=rw"},
-]
-const TypeSelectBar = () => {
-  return (
-    <div className='flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg '>
-        {
-            Links.map((link)=>(
-                <div className='flex gap-5 cursor-pointer hover:bg-gray-200 hover:text-cyan-600  px-3 py-2'>
-                    <img className='w-7 h-7' src={link.img_src} alt=''></img>
-                    <div className='flex items-start fond-bold'>{link.name}</div>
-                </div>
-            ))
-        }
-    </div>
-  )
-}
+];
 
-export default TypeSelectBar
+const TypeSelectBar = ({ onSelectType, selectedType }) => {
+  return (
+    <div className='flex flex-col gap-4'>
+      {Links.map((link, index) => (
+        <div
+          key={index}
+          className={`flex items-center gap-4 cursor-pointer p-2 rounded-lg transition-all duration-300
+            ${selectedType === link.name.toLowerCase() 
+              ? 'bg-indigo-100 text-indigo-600' 
+              : 'hover:bg-gray-100'
+            }`}
+          onClick={() => onSelectType(link.name.toLowerCase())}
+        >
+          <img 
+            src={link.img_src} 
+            alt={link.name} 
+            className='w-12 h-12 object-cover rounded-lg' 
+          />
+          <span className={`${
+            selectedType === link.name.toLowerCase() 
+              ? 'font-semibold' 
+              : 'text-gray-700'
+          }`}>
+            {link.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default TypeSelectBar;

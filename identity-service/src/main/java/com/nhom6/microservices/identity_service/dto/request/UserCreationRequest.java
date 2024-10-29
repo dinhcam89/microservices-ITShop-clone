@@ -17,6 +17,8 @@ public class UserCreationRequest {
     String password;
     String firstName;
     String lastName;
+    String address;
+    String phone;
     @Email
     String email;
 }

@@ -52,6 +52,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         // Get token from authorization
         List<String> authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
+
         if(CollectionUtils.isEmpty(authHeader))
             return unauthenticated(exchange.getResponse());
 
@@ -61,8 +62,9 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
         return identityService.introspect(token).flatMap(introspectResponse ->{
             // Delegate identity service
-            if(introspectResponse.getResult().isValid())
+            if(introspectResponse.getResult().isValid()) {
                 return chain.filter(exchange);
+            }
             else
                 return unauthenticated(exchange.getResponse());
         }).onErrorResume(throwable -> unauthenticated(exchange.getResponse()));

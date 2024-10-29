@@ -3,6 +3,8 @@ package com.nhom6.microservices.order.service;
 import com.nhom6.microservices.order.client.InventoryClient;
 import com.nhom6.microservices.order.dto.OrderRequest;
 import com.nhom6.microservices.order.event.OrderPlacedEvent;
+import com.nhom6.microservices.order.exception.AppException;
+import com.nhom6.microservices.order.exception.ErrorCode;
 import com.nhom6.microservices.order.model.Order;
 import com.nhom6.microservices.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +28,15 @@ public class OrderService {
     private  KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public void placeOrder(OrderRequest orderRequest) {
-
+        // Kiểm tra tồn kho
         var isProductInStock = inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
 
         if (isProductInStock) {
+            // Thực hiện giảm số lượng trong kho
+            boolean deductResult = inventoryClient.deductQuantity(orderRequest.skuCode(), orderRequest.quantity());
+            if (!deductResult) {
+                throw new AppException(ErrorCode.INVENTORY_DEDUCTION_FAILED);
+            }
 
             Order order = new Order();
             order.setOrderNumber(UUID.randomUUID().toString());
@@ -54,7 +61,7 @@ public class OrderService {
 
             kafkaTemplate.send("order-placed", orderPlacedEvent);
         } else {
-            throw new RuntimeException("Product with SkuCode " + orderRequest.skuCode() + " is not in stock");
+            throw new AppException(ErrorCode.INSUFFICIENT_INVENTORY);
         }
     }
 }

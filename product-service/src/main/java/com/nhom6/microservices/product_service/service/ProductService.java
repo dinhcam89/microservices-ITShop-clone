@@ -1,11 +1,15 @@
 package com.nhom6.microservices.product_service.service;
 
+import com.nhom6.microservices.product_service.client.InventoryClient;
+import com.nhom6.microservices.product_service.dto.InventoryRequest;
 import com.nhom6.microservices.product_service.dto.ProductRequest;
 import com.nhom6.microservices.product_service.dto.ProductRespone;
 import com.nhom6.microservices.product_service.model.Product;
 import com.nhom6.microservices.product_service.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,9 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    private final InventoryClient inventoryClient;
+
+
     @PreAuthorize("hasRole('ADMIN')")
     public ProductRespone createProduct(ProductRequest productRequest) {
         Product product = Product.builder()
@@ -31,6 +38,16 @@ public class ProductService {
                 .build();
         productRepository.save(product);
         log.info("Product created successfully");
+
+        InventoryRequest inventoryRequest = InventoryRequest.builder()
+                .skuCode(product.getSkuCode())
+                .quantity(0)
+                .build();
+
+        inventoryClient.createInventory(inventoryRequest);
+
+        log.info("Product and inventory created successfully");
+
         return new ProductRespone(product.getId(), product.getName(), product.getDescription(),
                 product.getSkuCode(), product.getPrice(), product.getType(), product.getImageUrl());
     }
