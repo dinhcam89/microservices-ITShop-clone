@@ -31,7 +31,7 @@ public class NotificationService {
                             Your order with order number %s is now placed successfully.
                             
                             Best Regards
-                            Spring Shop
+                            IT shop
                             """,
                     orderPlacedEvent.getFirstName().toString(),
                     orderPlacedEvent.getLastName().toString(),

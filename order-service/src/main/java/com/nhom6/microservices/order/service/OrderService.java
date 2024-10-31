@@ -2,6 +2,7 @@ package com.nhom6.microservices.order.service;
 
 import com.nhom6.microservices.order.client.InventoryClient;
 import com.nhom6.microservices.order.dto.OrderRequest;
+import com.nhom6.microservices.order.dto.OrderResponse;
 import com.nhom6.microservices.order.event.OrderPlacedEvent;
 import com.nhom6.microservices.order.exception.AppException;
 import com.nhom6.microservices.order.exception.ErrorCode;
@@ -11,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,6 +46,7 @@ public class OrderService {
             order.setPrice(orderRequest.price());
             order.setSkuCode(orderRequest.skuCode());
             order.setQuantity(orderRequest.quantity());
+            order.setOrderDate(orderRequest.orderDate());
             orderRepository.save(order);
 
             OrderPlacedEvent orderPlacedEvent = OrderPlacedEvent.newBuilder()
@@ -64,4 +68,49 @@ public class OrderService {
             throw new AppException(ErrorCode.INSUFFICIENT_INVENTORY);
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<OrderResponse> getAllOrders() {
+            return orderRepository.findAll().stream()
+                    .map(order -> new OrderResponse(order.getId(),order.getOrderNumber(),
+                            order.getSkuCode(), order.getPrice(), order.getQuantity(),order.getOrderDate())).toList();
+    }
+
+    public OrderResponse getOrder(String orderNumber) {
+        var order = orderRepository.findByOrderNumber(orderNumber);
+        return OrderResponse.builder()
+                .id(order.getId())
+                .orderNumber(order.getOrderNumber())
+                .skuCode(order.getSkuCode())
+                .price(order.getPrice())
+                .quantity(order.getQuantity())
+                .orderDate(order.getOrderDate())
+                .build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public OrderResponse updateOrder(String orderNumber, OrderRequest orderRequest) {
+        var order = orderRepository.findByOrderNumber(orderNumber);
+        order.setPrice(orderRequest.price());
+        order.setQuantity(orderRequest.quantity());
+        order.setOrderDate(orderRequest.orderDate());
+        orderRepository.save(order);
+        return OrderResponse.builder()
+                .id(order.getId())
+                .orderNumber(order.getOrderNumber())
+                .skuCode(order.getSkuCode())
+                .price(order.getPrice())
+                .quantity(order.getQuantity())
+                .orderDate(order.getOrderDate())
+                .build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteOrder(String orderNumber) {
+        var order = orderRepository.findByOrderNumber(orderNumber);
+        orderRepository.delete(order);
+        return order.getOrderNumber();
+    }
+
+
 }

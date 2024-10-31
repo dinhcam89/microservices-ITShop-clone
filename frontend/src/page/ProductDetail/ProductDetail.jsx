@@ -75,7 +75,8 @@ const ProductDetail = () => {
                 skuCode: product.skuCode,
                 quantity: amount,
                 price: product.price,
-                userDetails: userInfo
+                userDetails: userInfo,
+                orderDate: new Date().toISOString()
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "t_orders")
@@ -21,7 +22,7 @@ public class Order {
     private String skuCode;
     private BigDecimal price;
     private Integer quantity;
-
+    private Date orderDate;
 
     public String getOrderNumber() {
         return orderNumber;

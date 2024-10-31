@@ -5,5 +5,6 @@ CREATE TABLE `t_orders` (
                             `sku_code` VARCHAR(255),
                             `price` DECIMAL(19,2),
                             `quantity` INT(11),
+                            `order_date` DATE,
                             PRIMARY KEY (`id`)
 );

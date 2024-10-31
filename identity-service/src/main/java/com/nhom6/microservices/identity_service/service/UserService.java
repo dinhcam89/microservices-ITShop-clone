@@ -62,7 +62,7 @@ public class UserService {
                 .map(userMapper::toUserResponse).toList();
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUserById(String id) {
         log.info("In method getUserById");
         return userMapper.toUserResponse(userRepository.findById(id)
@@ -84,7 +84,7 @@ public class UserService {
 
         User user = userRepository.findByUsername(username).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        log.info("In method updatemyinfo");
+
         user.setEmail(userUpdateRequest.getEmail());
         user.setFirstName(userUpdateRequest.getFirstName());
         user.setLastName(userUpdateRequest.getLastName());
@@ -98,12 +98,11 @@ public class UserService {
     public UserResponse updateUser(String id, UserUpdateRequest userUpdateRequest) {
 
         User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
-        userMapper.updateUser(user, userUpdateRequest);
-        user.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
-
-        var role = roleRepository.findAllById(userUpdateRequest.getRoles());
-        user.setRoles(new HashSet<>(role));
-
+        user.setEmail(userUpdateRequest.getEmail());
+        user.setFirstName(userUpdateRequest.getFirstName());
+        user.setLastName(userUpdateRequest.getLastName());
+        user.setAddress(userUpdateRequest.getAddress());
+        user.setPhone(userUpdateRequest.getPhone());
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
