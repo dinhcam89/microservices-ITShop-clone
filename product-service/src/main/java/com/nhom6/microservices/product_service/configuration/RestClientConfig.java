@@ -1,4 +1,4 @@
-package com.nhom6.microservices.product_service.config;
+package com.nhom6.microservices.product_service.configuration;
 
 import com.nhom6.microservices.product_service.client.InventoryClient;
 import io.micrometer.observation.ObservationRegistry;
