@@ -41,7 +41,7 @@
 
 4. **TRUY CẬP API GATEWAY:**
 
-   API Gateway sẽ chạy tại `http://localhost:8080` (hoặc port được cấu hình).
+   API Gateway sẽ chạy tại `http://localhost:9000` (hoặc port được cấu hình).
 
 ## CẤU TRÚC PROJECT
 
@@ -64,3 +64,4 @@ cd frontend
 npm install
 npm start
 ```
+Truy cập frontend tại `http://localhost:3500`
