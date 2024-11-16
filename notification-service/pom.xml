@@ -33,7 +33,7 @@
 	<repositories>
 		<repository>
 			<id>confluent</id>
-			<url>packages.confluent.io/</url>
+			<url>https://packages.confluent.io/maven/</url>
 		</repository>
 	</repositories>
 
