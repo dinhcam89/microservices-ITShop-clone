@@ -10,6 +10,4 @@ public interface PermissionMapper {
     Permission toPermission(PermissionRequest permissionRequest);
 
     PermissionResponse toPermissionResponse(Permission permission);
-
-
 }

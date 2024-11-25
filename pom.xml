@@ -12,12 +12,12 @@
 	</parent>
     
 
-    <groupId>com.nhom6.microservices</groupId>
+  <groupId>com.nhom6.microservices</groupId>
 	<artifactId>microservices-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>microservices-parent</name>
 	<description>Parent POM for microservices project</description>
-    <packaging>pom</packaging>
+  <packaging>pom</packaging>
 
 
     <modules>
@@ -30,23 +30,36 @@
     </modules>
 
     <properties>
-        <java.version>21</java.version>
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
-         <dockerPassword>${dockerPassword}</dockerPassword>
-    </properties>
-    
-
-    <build>
+    <java.version>21</java.version>
+    <spring-cloud.version>2023.0.1</spring-cloud.version>
+    <dockerPassword>${dockerPassword}</dockerPassword>
+  </properties>
+  <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <image>
-              <name>4miby/${project.artifactId}</name>
-              <builder>dashaun/builder:tiny</builder>
-              <publish>true</publish>
+            <name>4miby/new-${project.artifactId}</name>
+            <env>
+                <!-- Cấu hình siêu tối thiểu -->
+                <BPL_JVM_THREAD_COUNT>5</BPL_JVM_THREAD_COUNT>
+                <BPL_JVM_HEAD_ROOM>1</BPL_JVM_HEAD_ROOM>
+                <JAVA_TOOL_OPTIONS>
+                    -XX:MaxMetaspaceSize=48M 
+                    -XX:ReservedCodeCacheSize=32M 
+                    -Xss256k 
+                    -XX:MaxDirectMemorySize=4M
+                    -Xmx200M
+                    -XX:+UseSerialGC
+                </JAVA_TOOL_OPTIONS>
+                <BP_JVM_DEFAULT_MEMORY_LIMIT>256M</BP_JVM_DEFAULT_MEMORY_LIMIT>
+            </env>
+            <builder>paketobuildpacks/builder-jammy-tiny:latest</builder>
+            <publish>true</publish>
           </image>
+
           <docker>
             <publishRegistry>
               <username>4miby</username>
