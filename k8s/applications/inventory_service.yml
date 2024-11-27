@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: 4miby/new-inventory-service:latest
+          image: 4miby/inventory-service:latest
           env:
             - name: SPRING_DATASOURCE_URL
               valueFrom:

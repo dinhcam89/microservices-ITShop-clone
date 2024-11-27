@@ -4,12 +4,12 @@ WORKDIR /app
 
 # Copy parent pom.xml first and install
 COPY pom.xml /app/
-COPY api-gateway/pom.xml /app/api-gateway/
-COPY api-gateway/src /app/api-gateway/src
+COPY identity-service/pom.xml /app/identity-service/
+COPY identity-service/src /app/identity-service/src
 
 # Build project
 RUN mvn install -N
-WORKDIR /app/api-gateway
+WORKDIR /app/identity-service
 RUN mvn clean package -DskipTests
 
 # Run stage
@@ -21,10 +21,10 @@ RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
 # Copy jar from build stage
-COPY --from=build /app/api-gateway/target/*.jar app.jar
+COPY --from=build /app/identity-service/target/*.jar app.jar
 
 # Configure JVM
 ENV JAVA_OPTS="-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
 
-EXPOSE 9000
+EXPOSE 8087
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

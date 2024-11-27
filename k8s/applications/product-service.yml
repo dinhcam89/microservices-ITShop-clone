@@ -14,13 +14,18 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: 4miby/new-product-service:latest
+          image: 4miby/product-service:latest
           env:
             - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 configMapKeyRef:
                   key: SPRING_DATA_MONGODB_URI
                   name: product-service-config
+            - name: INVENTORY_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: INVENTORY_SERVICE_URL
+                  name: common-config
 ---
 apiVersion: v1
 kind: Service

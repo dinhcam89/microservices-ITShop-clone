@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: 4miby/new-api-gateway:latest
+          image: 4miby/api-gateway:latest
           ports:
             - containerPort: 9000
           env:
