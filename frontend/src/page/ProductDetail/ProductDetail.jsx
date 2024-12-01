@@ -6,6 +6,7 @@ import Footer from '../../components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../contexts/AuthContext';
+import config from '../../config';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -20,7 +21,7 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:9000/api/products/${id}`);
+                const response = await axios.get(`${config.API_URL}/api/products/${id}`);
                 setProduct(response.data);
                 if (response.data.imageUrl && response.data.imageUrl.length > 0) {
                     setActiveImage(response.data.imageUrl[0]);
@@ -58,7 +59,7 @@ const ProductDetail = () => {
             const token = localStorage.getItem('token');
             
             // Lấy thông tin user
-            const userResponse = await axios.get('http://localhost:9000/api/users/myinfo', {
+            const userResponse = await axios.get(`${config.API_URL}/api/users/myinfo`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -71,7 +72,7 @@ const ProductDetail = () => {
             };
             console.log(userInfo);
             // Gửi order request
-            await axios.post('http://localhost:9000/api/orders', {
+            await axios.post(`${config.API_URL}/api/orders`, {
                 skuCode: product.skuCode,
                 quantity: amount,
                 price: product.price,

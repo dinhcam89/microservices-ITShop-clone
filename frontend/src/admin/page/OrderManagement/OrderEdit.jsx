@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import config from '../../../config';
 const OrderEdit = () => {
     const { orderNumber } = useParams();
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const OrderEdit = () => {
     const fetchOrder = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:9000/api/orders/${orderNumber}`, {
+            const response = await axios.get(`${config.API_URL}/api/orders/${orderNumber}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setOrder(response.data);
@@ -44,7 +44,7 @@ const OrderEdit = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:9000/api/orders/${orderNumber}`, order, {
+            await axios.put(`${config.API_URL}/api/orders/${orderNumber}`, order, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Cập nhật thành công!');

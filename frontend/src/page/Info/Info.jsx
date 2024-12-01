@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import axios from 'axios';
+import config from '../../config';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({
@@ -23,7 +24,7 @@ const Profile = () => {
   const fetchUserInfo = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:9000/api/users/myinfo', {
+      const response = await axios.get(`${config.API_URL}/api/users/myinfo`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -48,7 +49,7 @@ const Profile = () => {
       delete userInfo.roles
       delete userInfo.username
 
-      await axios.put('http://localhost:9000/api/users/myinfo', userInfo, {
+      await axios.put(`${config.API_URL}/api/users/myinfo`, userInfo, {
         headers: {
           Authorization: `Bearer ${token}`
         }

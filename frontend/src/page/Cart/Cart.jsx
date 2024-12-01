@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../../config';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -16,7 +17,7 @@ const Cart = () => {
               const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
               const itemsWithDetails = await Promise.all(
                   storedItems.map(async (item) => {
-                      const response = await axios.get(`http://localhost:9000/api/products/${item.productId}`);
+                      const response = await axios.get(`${config.API_URL}/api/products/${item.productId}`);
                       return {
                           ...response.data,
                           quantity: item.quantity

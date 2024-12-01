@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import config from '../../../config';
 const InventoryEdit = () => {
     const { skuCode } = useParams();
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ const InventoryEdit = () => {
     const fetchInventory = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:9000/api/inventorys/${skuCode}`, {
+            const response = await axios.get(`${config.API_URL}/api/inventorys/${skuCode}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setInventory(response.data);
@@ -42,7 +42,7 @@ const InventoryEdit = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:9000/api/inventorys/${skuCode}`, inventory, {
+            await axios.put(`${config.API_URL}/api/inventorys/${skuCode}`, inventory, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Cập nhật thành công!');

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import config from '../../../config';
 const UserEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const UserEdit = () => {
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:9000/api/users/${id}`, {
+            const response = await axios.get(`${config.API_URL}/api/users/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUser(response.data.result);
@@ -47,7 +47,7 @@ const UserEdit = () => {
             const token = localStorage.getItem('token');
             delete user.roles;
             delete user.username;
-            await axios.put(`http://localhost:9000/api/users/${id}`, user, {
+            await axios.put(`${config.API_URL}/api/users/${id}`, user, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Cập nhật thành công!');

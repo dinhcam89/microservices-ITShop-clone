@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import config from '../../../config';
 
 const ProductEdit = () => {
     const { id } = useParams();
@@ -24,7 +25,7 @@ const ProductEdit = () => {
     const fetchProduct = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:9000/api/products/${id}`, {
+            const response = await axios.get(`${config.API_URL}/api/products/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProduct(response.data);

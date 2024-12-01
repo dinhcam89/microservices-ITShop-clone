@@ -5,7 +5,7 @@ import TypeSelectBar from './components/TypeSelectBar'
 import Footer from '../../components/Footer'
 import Carousel from './components/Carousel'
 import axios from 'axios'
-
+import config from '../../config';
 const Home = () => {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -16,14 +16,14 @@ const Home = () => {
     const fetchProducts = async (type) => {
       setLoading(true);
       try {
-        let url = 'http://localhost:9000/api/products';
+        let url = `${config.API_URL}/api/products`;
         if (type && type !== 'all') {
-          url = `http://localhost:9000/api/products/type/${type}`;
+          url = `${config.API_URL}/api/products/type/${type}`;
         }
         const res = await axios.get(url);
         setProducts(res.data);
       } catch (err) {
-        setError('Không thể tải danh sách sản phẩm');
+        setError(`Không thể tải danh sách sản phẩm`);
         console.error('Error:', err);
       } finally {
         setLoading(false);

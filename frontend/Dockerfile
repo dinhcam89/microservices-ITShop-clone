@@ -6,6 +6,10 @@ WORKDIR /app
 # Copy package files
 COPY package.json package-lock.json ./
 
+# Định nghĩa ARG trước khi sử dụng trong ENV
+ARG API_URL
+ENV REACT_APP_API_URL=${API_URL}
+
 # Install dependencies
 RUN npm install
 
@@ -19,9 +23,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy built assets from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80

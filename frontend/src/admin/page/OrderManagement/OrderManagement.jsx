@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import config from '../../../config';
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const OrderManagement = () => {
     const fetchOrders = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:9000/api/orders', {
+            const response = await axios.get(`${config.API_URL}/api/orders`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -30,7 +30,7 @@ const OrderManagement = () => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:9000/api/orders/${id}`, {
+            await axios.delete(`${config.API_URL}/api/orders/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

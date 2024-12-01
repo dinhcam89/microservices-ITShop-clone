@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from '../../../config';
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ const UserManagement = () => {
     const fetchUsers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:9000/api/users', {
+            const response = await axios.get(`${config.API_URL}/api/users`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -31,7 +32,7 @@ const UserManagement = () => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:9000/api/users/${id}`, {
+            await axios.delete(`${config.API_URL}/api/users/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

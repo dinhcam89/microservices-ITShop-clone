@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import config from '../../../config';
 const CreateProduct = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
@@ -55,7 +55,7 @@ const CreateProduct = () => {
                 newProduct.imageUrl = imageUrls;
             }
 
-            await axios.post('http://localhost:9000/api/products', newProduct, {
+            await axios.post(`${config.API_URL}/api/products`, newProduct, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Thêm sản phẩm thành công!');

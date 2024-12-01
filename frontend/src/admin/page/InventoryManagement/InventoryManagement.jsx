@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import config from '../../../config';
 const InventoryManagement = () => {
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ const InventoryManagement = () => {
     const fetchInventory = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:9000/api/inventorys', {
+            const response = await axios.get(`${config.API_URL}/api/inventorys`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -31,7 +32,7 @@ const InventoryManagement = () => {
     const handleDelete = async (skuCode) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:9000/api/inventorys/${skuCode}`, {
+            await axios.delete(`/api/inventorys/${skuCode}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

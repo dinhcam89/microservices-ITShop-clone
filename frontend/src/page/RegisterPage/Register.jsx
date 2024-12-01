@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import config from '../../config';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:9000/api/users', {
+      const response = await axios.post(`${config.API_URL}/api/users`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,
