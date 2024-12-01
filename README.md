@@ -86,7 +86,7 @@ kubectl get pods
 kubectl apply -f applications
 ```
 
-2. **CHẠY NGINX INGRESS CONTROLLER:**
+3. **CHẠY NGINX INGRESS CONTROLLER:**
 
 ``` bash
 minikube addons enable ingress
