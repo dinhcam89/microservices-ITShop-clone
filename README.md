@@ -1,4 +1,4 @@
-# MICROservices PROJECT
+# Micorservice Project
 
 Đây là một dự án MICROservices bao gồm các service sau:
 - **API GATEWAY**
@@ -64,3 +64,47 @@ cd frontend
 npm install
 npm start
 ```
+## CÀI ĐẶT BẰNG K8S
+
+1. **CHẠY CÁC CONTAINER CẦN THIẾT CHO ỨNG DỤNG:**
+
+Chạy các container cần thiết bằng câu lệnh sau:
+``` bash
+cd k8s
+kubectl apply -f infrastructure
+```
+Đợi cho các container này hoàn thành chạy (trạng thái running)
+
+Kiểm tra bằng câu lệnh:
+``` bash
+kubectl get pods
+```
+
+2. **CHẠY CÁC SERVICE APPLICATION:**
+
+``` bash
+kubectl apply -f applications
+```
+
+2. **CHẠY NGINX INGRESS CONTROLLER:**
+
+``` bash
+minikube addons enable ingress
+kubectl apply -f ingress
+```
+
+Chạy lệnh để lấy ip của minikube :
+
+``` bash
+kubectl get ingress 
+```
+
+Thêm vào file /etc/hosts:
+
+``` bash
+<minikube ip> itshop.k8s
+<minikube ip> api.itshop.k8s
+```
+
+
+
