@@ -34,7 +34,7 @@ jobs:
       - name: Build and push identity image
         uses: docker/build-push-action@v5
         with:
-          context: ./identity
+          context: ./identity-service
           file: ./identity/Dockerfile
           push: true
           tags: dinhcam89/identity:latest
