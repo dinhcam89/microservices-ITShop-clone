@@ -34,7 +34,7 @@ jobs:
       - name: Build and push identity image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./identity-service
           file: ./identity-service/Dockerfile
           push: true
           tags: dinhcam89/identity:latest
@@ -42,7 +42,7 @@ jobs:
       - name: Build and push inventory image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./inventory-service
           file: ./inventory-service/Dockerfile
           push: true
           tags: dinhcam89/inventory:latest
@@ -50,7 +50,7 @@ jobs:
       - name: Build and push notification image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./notification-service
           file: ./notification-service/Dockerfile
           push: true
           tags: dinhcam89/notification:latest
@@ -58,7 +58,7 @@ jobs:
       - name: Build and push order image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./order-service
           file: ./order-service/Dockerfile
           push: true
           tags: dinhcam89/order:latest
@@ -66,7 +66,7 @@ jobs:
       - name: Build and push product image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./product-service
           file: ./product-service/Dockerfile
           push: true
           tags: dinhcam89/product:latest
