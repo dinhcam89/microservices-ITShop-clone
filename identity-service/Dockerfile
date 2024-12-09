@@ -4,8 +4,8 @@ WORKDIR /app
 
 # Copy parent pom.xml first and install
 COPY pom.xml /app/
-COPY pom.xml /app/identity-service/
-COPY src /app/identity-service/src
+COPY identity-service/pom.xml /app/identity-service/
+COPY identity-service/src /app/identity-service/src
 
 # Build project
 RUN mvn install -N
