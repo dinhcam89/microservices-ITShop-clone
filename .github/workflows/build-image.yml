@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./identity-service
-          file: ./identity/Dockerfile
+          file: ./identity-service/Dockerfile
           push: true
           tags: dinhcam89/identity:latest
 
