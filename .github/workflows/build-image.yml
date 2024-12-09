@@ -8,8 +8,9 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-${{ env.IMAGE_TAG }}
+    env:
+        IMAGE_TAG: v0.0.1
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
@@ -29,7 +30,7 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: dinhcam89/frontend:latest
+          tags: dinhcam89/frontend:${{ env.IMAGE_TAG }}
 
       - name: Build and push identity image
         uses: docker/build-push-action@v5
@@ -37,7 +38,7 @@ jobs:
           context: .
           file: ./identity-service/Dockerfile
           push: true
-          tags: dinhcam89/identity:latest
+          tags: dinhcam89/identity:${{ env.IMAGE_TAG }}
 
       - name: Build and push inventory image
         uses: docker/build-push-action@v5
@@ -45,7 +46,7 @@ jobs:
           context: .
           file: ./inventory-service/Dockerfile
           push: true
-          tags: dinhcam89/inventory:latest
+          tags: dinhcam89/inventory:${{ env.IMAGE_TAG }}
 
       - name: Build and push notification image
         uses: docker/build-push-action@v5
@@ -53,7 +54,7 @@ jobs:
           context: .
           file: ./notification-service/Dockerfile
           push: true
-          tags: dinhcam89/notification:latest
+          tags: dinhcam89/notification:${{ env.IMAGE_TAG }}
 
       - name: Build and push order image
         uses: docker/build-push-action@v5
@@ -61,7 +62,7 @@ jobs:
           context: .
           file: ./order-service/Dockerfile
           push: true
-          tags: dinhcam89/order:latest
+          tags: dinhcam89/order:${{ env.IMAGE_TAG }}
 
       - name: Build and push product image
         uses: docker/build-push-action@v5
@@ -69,4 +70,4 @@ jobs:
           context: .
           file: ./product-service/Dockerfile
           push: true
-          tags: dinhcam89/product:latest
+          tags: dinhcam89/product:${{ env.IMAGE_TAG }}
