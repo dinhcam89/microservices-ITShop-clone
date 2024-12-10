@@ -27,3 +27,8 @@ spec:
                 configMapKeyRef:
                   name: notification-service-config
                   key: SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.notificationService.name }}-active
+      previewService: {{ .Values.services.notificationService.name }}-preview
+      autoPromotionEnabled: false

@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ .Values.services.apiGateway.name }}
 spec:
@@ -39,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: common-config
                   key: IDENTITY_SERVICE_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.apiGateway.name }}-active
+      previewService: {{ .Values.services.apiGateway.name }}-preview
+      autoPromotionEnabled: false

@@ -27,3 +27,8 @@ spec:
                 configMapKeyRef:
                   name: common-config
                   key: INVENTORY_SERVICE_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.productService.name }}-active
+      previewService: {{ .Values.services.productService.name }}-preview
+      autoPromotionEnabled: false

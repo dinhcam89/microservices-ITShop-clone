@@ -37,3 +37,8 @@ spec:
                 configMapKeyRef:
                   name: order-service-config
                   key: SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.orderService.name }}-active
+      previewService: {{ .Values.services.orderService.name }}-preview
+      autoPromotionEnabled: false

@@ -22,3 +22,8 @@ spec:
                 configMapKeyRef:
                   name: inventory-service-config
                   key: SPRING_DATASOURCE_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.inventoryService.name }}-active
+      previewService: {{ .Values.services.inventoryService.name }}-preview
+      autoPromotionEnabled: false

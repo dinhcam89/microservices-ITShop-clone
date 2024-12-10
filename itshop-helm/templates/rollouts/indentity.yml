@@ -22,3 +22,8 @@ spec:
                 configMapKeyRef:
                   name: identity-service-config
                   key: SPRING_DATASOURCE_URL
+  strategy:
+    blueGreen:
+      activeService: {{ .Values.services.identityService.name }}-active
+      previewService: {{ .Values.services.identityService.name }}-preview
+      autoPromotionEnabled: false
