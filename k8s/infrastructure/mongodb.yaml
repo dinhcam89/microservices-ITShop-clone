@@ -70,8 +70,9 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-  hostPath:
-    path: /data/mongodb
+  gcePersistentDisk:
+    pdName: mongodb-disk
+    fsType: ext4
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
