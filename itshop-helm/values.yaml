@@ -4,7 +4,7 @@ global:
 images:
   registry: dinhcam89
   pullPolicy: IfNotPresent
-  tag: v0.0.6-prod
+  tag: v0.0.7-prod
 
 services:
   apiGateway:
