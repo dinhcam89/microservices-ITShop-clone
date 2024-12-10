@@ -71,7 +71,7 @@ spec:
   capacity:
     storage: 1Gi
   gcePersistentDisk:
-    pdName: mongodb-disk
+    pdName: mongodb-disk-prod
     fsType: ext4
 ---
 apiVersion: v1

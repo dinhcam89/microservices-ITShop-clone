@@ -70,7 +70,7 @@ spec:
   capacity:
     storage: 1Gi
   gcePersistentDisk:
-    pdName: mysql-disk
+    pdName: mysql-disk-prod
     fsType: ext4
 ---
 apiVersion: v1
