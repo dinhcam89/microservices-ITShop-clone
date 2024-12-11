@@ -22,3 +22,5 @@ spec:
                 configMapKeyRef:
                   name: inventory-service-config
                   key: SPRING_DATASOURCE_URL
+      imagePullSecrets:
+        - name: {{ .Values.images.pullSecret }}

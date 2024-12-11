@@ -4,7 +4,8 @@ global:
 images:
   registry: dinhcam89
   pullPolicy: IfNotPresent
-  tag: v0.0.3
+  tag: 1537d2b9
+  pullSecret: harbor-registry-secret
 
 services:
   apiGateway:
